@@ -114,9 +114,6 @@ double simulate(Candidate candidate) {
     time += dt;
 
 
-    std::cout << "x=" << y(5) << std::endl;
-    std::cout << "y=" << y(6) << std::endl;
-
   }
   
   return std::sqrt( std::pow(2.5 - y(5), 2) + std::pow(0-y(6), 2) );

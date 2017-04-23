@@ -1,16 +1,11 @@
 #include "Candidate.h"
-#include "Simulate.cpp"
 #include "GeneticAlgorithm.h"
 #include <iostream>
-
-void evaluatePopulation(Candidate* population, unsigned long long &currentFitness);
-void selectFitterIndividuals(Candidate* population);
-void matePopulation(Candidate* population);
-void mutateIndividuals(Candidate* population);
+#include <random>
 
 int main(int argc, char** argv) {
 
-  srand(time(0));
+  srand(123456789);
   Candidate *population;
   
   // Step 1, initialize the population
@@ -22,6 +17,7 @@ int main(int argc, char** argv) {
   unsigned int iteration = 0;
   // Step 3 While Termination condition not met do
   while( iteration < 10000) { 
+    std::cout << "Iteration " << iteration << std::endl;
     iteration++;
     // Step 4 Select fitter individuals for reproduction
     selectFitterIndividuals(population);
@@ -35,6 +31,8 @@ int main(int argc, char** argv) {
     // Step 7 Evaluate the fitness of the modified individuals
     evaluatePopulation(population);
   }
+  
+  free(population);
 
   return 0;
 }
