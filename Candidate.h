@@ -7,4 +7,7 @@ struct Candidate
   double fitness;
 };
 
+
+
+
 #endif

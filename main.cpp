@@ -2,7 +2,7 @@
 #include "GeneticAlgorithm.h"
 #include <iostream>
 #include <random>
-
+using namespace std;
 int main(int argc, char** argv) {
 
   srand(123456789);
@@ -10,6 +10,11 @@ int main(int argc, char** argv) {
   
   // Step 1, initialize the population
   initializePopulation(population);
+  cout << "No problem initializing \n";
+  for(int i=0; i < 2000; i++) {
+    cout << " Fitness at " << i << " " << population[i].fitness << endl; 
+  }
+
 
   // Step 2, evaluate the population
   evaluatePopulation(population);

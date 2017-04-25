@@ -13,15 +13,17 @@ using namespace std;
 
 /*
  * Function: initializePopulation
- * Param: Candidate* population
+ * Param: Candidate *&population
  * Purpose: Allocate memory for the population and initialize 
  *          members of the population with random variables
  */
 void initializePopulation(Candidate *&population)
 {
   population = (Candidate* ) malloc(POPULATION_SIZE * sizeof(*population));
-   
+  
+  #pragma omp parallel for 
   for(int i=0; i < POPULATION_SIZE; i++){
+    population[i].fitness = 0;
     for(int j=0; j< 4; j++) {
       population[i].torque[j] =  double(rand() % TORQUE_BOUND); 
     }
@@ -30,22 +32,22 @@ void initializePopulation(Candidate *&population)
 
 /*
  * Function: evaluatePopulation
- * Param: Candidate* population
+ * Param: Candidate *&population
  * Purpose: The purpose of this function is to assign a fitness to
  *          each member of the population dependant on their variables
  *
  */
 void evaluatePopulation(Candidate *&population)
 {
+  #pragma omp parallel for 
   for(int i=0; i < POPULATION_SIZE; i++){
-    cout << "Evaluation population, at " << i << endl;
     population[i].fitness =  simulate(population[i]); 
   }
 }
 
 /*
  * Function: selectFitterIndividuals 
- * Param: Candidate* population
+ * Param: Candidate *&population
  * Purpose: The purpose of this function is to change population
  *          Such that the members of the population are more fit.
  *
@@ -59,6 +61,7 @@ void selectFitterIndividuals(Candidate *&population)
   Candidate* newPopulation = (Candidate* ) malloc(POPULATION_SIZE * sizeof(*newPopulation));
   double totalFitness = 0;
 
+  #pragma omp parallel for reduction(+:totalFitness)
   for(int i=0; i < POPULATION_SIZE; i++) {
     totalFitness += population[i].fitness; 
   }
@@ -66,7 +69,9 @@ void selectFitterIndividuals(Candidate *&population)
   std::default_random_engine generator;
   std::uniform_real_distribution<double> distribution(0.0,1.0);
   
-  for(int i=0; i < POPULATION_SIZE; i++) {
+
+  #pragma omp parallel for private(generator)
+ for(int i=0; i < POPULATION_SIZE; i++) {
 
     double newPopulationTarget = distribution(generator) * totalFitness;
     cout << " Population Target: " << newPopulationTarget << endl;
@@ -91,7 +96,7 @@ void selectFitterIndividuals(Candidate *&population)
 
 /*
  * Function: matePopulation
- * Param: Candidate* population
+ * Param: Candidate *&population
  * Purpose: The purpose of this function is to mate members of the population
  *          dependent on the Crossover rate.
  */
@@ -101,6 +106,7 @@ void matePopulation(Candidate *&population)
   std::default_random_engine generator;
   std::uniform_real_distribution<double> distribution(0.0,1.0);
 
+  #pragma omp parallel for private(generator) 
   for(int i=0; i < POPULATION_SIZE; i += 2){
     if(distribution(generator) <= CROSSOVER_RATE) {
 
@@ -123,7 +129,7 @@ void matePopulation(Candidate *&population)
 
 /*
  * Function: mutateIndividuals
- * Param: Candidate* population
+ * Param: Candidate *&population
  * Purpose: The purpose of this function is to apply a bitwise operation
  *          to mutate bits of each member of the population, just in case
  *          our fitness selection and mating accidentally removes
@@ -135,6 +141,7 @@ void mutateIndividuals(Candidate *&population)
   std::uniform_real_distribution<double> distribution(0.0,1.0);
 
   // for each member in the population
+  #pragma omp parallel for private(generator)
   for(int i=0; i < POPULATION_SIZE; i++) {
     // for each random variable in the member
     for(int j=0; j < 4; j++){
