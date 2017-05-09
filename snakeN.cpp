@@ -1,29 +1,25 @@
-#ifndef SIMULATE_CPP
-#define SIMULATE_CPP
-
-#include "Candidate.h"
 #include <iostream>
 #include "armadillo"
-#include <cmath>
 
-//using namespace std;
+using namespace std;
 using namespace arma;
 
-double simulate(Candidate candidate) {
-  int n = candidate.numberOfLinks;
-  vec Phase = zeros<vec>(n-1);
+int main(){
 
+  int n = 5;
+  contant double pi = 3.141592653;
+  vec Candidate = 30*ones<vec>(n-1);
+  Candidate(0) = 30;
+  Candidate(1) = 30;
+  Candidate(2) = 30;
+  Candidate(3) = 30;
+  vec Phase = zeros<vec>(n-1);
   for (int i=0; i<n-1; i++) {
     Phase(i) = pi*i/(n-2);
   }
 
   vec MASS = 1.0*ones<vec>(n);
   vec Length = 1.0*ones<vec>(n);
-
-  for(int i=0; i < n; i++){
-    MASS(i) = candidate.weight[i]; 
-    Length(i) = candidate.length[i];
-  }
 
   mat A = zeros<mat>(n-1, n);
   for (int i=0; i<(n-1); i++){
@@ -73,7 +69,7 @@ double simulate(Candidate candidate) {
   int step = 0;
   double TotalTime = 20.0;
   int PrintStep = 100; 
-
+ 
 
   vec y = zeros<vec>(2*(n+2));
   
@@ -131,7 +127,7 @@ double simulate(Candidate candidate) {
   
     vec U = zeros<vec>(n-1);
     for (int i=0; i<n-1; i++){
-      U(i) = candidate.torque[i]*sin(time+Phase(i));
+      U(i) = Candidate(i)*sin(time+Phase(i));
     }
 
     vec squareY = zeros<vec>(2*(n+2));
@@ -142,7 +138,7 @@ double simulate(Candidate candidate) {
     vec dy = inv(AA)*(BB*y+CC*U+DD*(squareY));
 
     y += dy*dt;
-  /* 
+   
     if(step%PrintStep == 0){
        vec xout = zeros<vec>(n+1);
        vec yout = zeros<vec>(n+1);
@@ -166,25 +162,22 @@ double simulate(Candidate candidate) {
           yout(i) += y(n+1) - YCENTER(0,0);
        }
 
-    }*/
+       ofstream myfile;
+       myfile.open ("coord.txt", fstream::app);
+       myfile << fixed << time << "\n";
+       for (int i=0; i<n+1; i++){
+       myfile << fixed << xout(i) << "\t" << fixed << yout(i) << "\n";
+       }
+       myfile << "\n";
+       myfile.close(); 
+
+    }
 
     time += dt;
     step ++;
   }
 
   
-  double outX = y(n);
-  double outY = y(n+1);
- 
-  outX = outX < 0 ? outX * - 1 : outX; 
-  outY = outY < 0 ? outY * - 1 : outY; 
-
-  double answer = outX - outY;
-
-  if(isnan(answer) || answer < 0)
-    answer = 0;
-
-  return answer;
-
+  
+  return 0;
 }
-#endif

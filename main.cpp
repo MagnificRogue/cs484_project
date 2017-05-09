@@ -9,7 +9,8 @@ int main(int argc, char** argv) {
   Candidate *population;
   
   // Step 1, initialize the population
-  initializePopulation(population);
+  initializePopulation(population, false, false, false);
+
   cout << "No problem initializing \n";
   for(int i=0; i < 2000; i++) {
     cout << " Fitness at " << i << " " << population[i].fitness << endl; 
