@@ -16,14 +16,14 @@ using namespace std;
 void initializePopulation(Candidate *&population, bool varyNumOfLinks, bool varyWeightOfLinks, bool varyLengthOfLinks)
 {
   std::default_random_engine generator;
-  std::uniform_real_distribution<double> torqueDistribution(TORQUE_LOWER_BOUND,TORQUE_UPPER_BOUND);
-  std::uniform_real_distribution<double> varyLinksDistribution(NUM_OF_LINKS_LOWER_BOUND,NUM_OF_LINKS_UPPER_BOUND +1 );
-  std::uniform_real_distribution<double> varyWeightDistribution(WEIGHT_OF_LINK_LOWER_BOUND,WEIGHT_OF_LINK_UPPER_BOUND );
-  std::uniform_real_distribution<double> varyLengthDistribution(LENGTH_OF_LINK_LOWER_BOUND,LENGTH_OF_LINK_UPPER_BOUND );
+  std::uniform_real_distribution<double> torqueDistribution(TORQUE_LOWER_BOUND,TORQUE_UPPER_BOUND + 1);
+  std::uniform_real_distribution<double> varyLinksDistribution(NUM_OF_LINKS_LOWER_BOUND,NUM_OF_LINKS_UPPER_BOUND + 1);
+  std::uniform_real_distribution<double> varyWeightDistribution(WEIGHT_OF_LINK_LOWER_BOUND,WEIGHT_OF_LINK_UPPER_BOUND+ 1);
+  std::uniform_real_distribution<double> varyLengthDistribution(LENGTH_OF_LINK_LOWER_BOUND,LENGTH_OF_LINK_UPPER_BOUND + 1);
 
   population = (Candidate* ) malloc(POPULATION_SIZE * sizeof(*population));
    
- for(int i=0; i < POPULATION_SIZE; i++){
+  for(int i=0; i < POPULATION_SIZE; i++){
     
     int numOfLinks = varyNumOfLinks ? int(varyLinksDistribution(generator)) : DEFAULT_NUM_OF_LINKS;
 
@@ -48,6 +48,8 @@ void evaluatePopulation(Candidate *&population)
 {
   for(int i=0; i < POPULATION_SIZE; i++){
     population[i].fitness =  simulate(population[i]); 
+    cout << "Evaluated population, at " << i << ": " << population[i].fitness <<  endl;
+
   }
 }
 
@@ -82,7 +84,7 @@ void selectFitterIndividuals(Candidate *&population)
       newPopulationTarget -= population[j].fitness;
 
       if(newPopulationTarget <=0) {
-        cout << " Found it at " << j << endl;
+        cout << " Found it at " << i << endl;
         newPopulation[i] = population[j];
         break;
       }

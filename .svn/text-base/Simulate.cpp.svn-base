@@ -10,17 +10,6 @@
 using namespace arma;
 
 double simulate(Candidate candidate) {
-/*
-  std::cout << "Simulating a snake!\n";
-  std::cout << "\t Number of links: " << candidate.numberOfLinks << "\n";
-  
-  for(int i=0; i < candidate.numberOfLinks; i++){
-    std::cout << "\t\tTorque[" << i << "]:" << candidate.torque[i] << "\n"; 
-    std::cout << "\t\tWeight[" << i << "]:" << candidate.weight[i] << "\n"; 
-    std::cout << "\t\tLength[" << i << "]:" << candidate.length[i] << "\n"; 
-  } 
-  std::cout << "\n";
-*/
   int n = candidate.numberOfLinks;
   vec Phase = zeros<vec>(n-1);
 
@@ -79,10 +68,10 @@ double simulate(Candidate candidate) {
 
   CC.submat(n+2,0,2*n+1,n-2) = D.t();
 
-  double dt = 0.0001;
+  double dt = 0.001;
   double time = 0.0;
   int step = 0;
-  double TotalTime = 5.0;
+  double TotalTime = 20.0;
   int PrintStep = 100; 
 
 
@@ -187,25 +176,13 @@ double simulate(Candidate candidate) {
   double outX = y(n);
   double outY = y(n+1);
  
-  /*
   outX = outX < 0 ? outX * - 1 : outX; 
   outY = outY < 0 ? outY * - 1 : outY; 
 
   double answer = outX - outY;
-<<<<<<< Updated upstream
 
   if(isnan(answer) || answer < 0)
     answer = 0;
-=======
-
-  if(isnan(answer) || answer < 0)
-    answer = 0;
-  */
-  double answer = sqrt(pow(outX,2) + pow(outY,2));
-  
-  if(isnan(answer))
-    std::cout << " I found a nan!\n";
- //   answer = 0;
 
   return answer;
 

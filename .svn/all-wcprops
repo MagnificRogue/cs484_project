@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project
+END
+snakeN.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/snakeN.cpp
+END
+Candidate.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/Candidate.h
+END
+Constants.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/Constants.h
+END
+GeneticAlgorithm_Parallel.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/GeneticAlgorithm_Parallel.cpp
+END
+Simulate.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/Simulate.cpp
+END
+armadillo
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/armadillo
+END
+main.exe
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/main.exe
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/.gitignore
+END
+armadillo_bits
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/armadillo_bits
+END
+main.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/main.cpp
+END
+GeneticAlgorithm.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/GeneticAlgorithm.cpp
+END
+GeneticAlgorithm.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/GeneticAlgorithm.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/sp17-cs484/!svn/ver/1698/dtubbs2/cs484_project/Makefile
+END

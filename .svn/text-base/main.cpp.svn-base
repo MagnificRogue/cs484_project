@@ -9,18 +9,21 @@ int main(int argc, char** argv) {
   Candidate *population;
   
   // Step 1, initialize the population
-  initializePopulation(population, true, true, true);
+  initializePopulation(population, false, false, false);
+
+  cout << "No problem initializing \n";
+  for(int i=0; i < 2000; i++) {
+    cout << " Fitness at " << i << " " << population[i].fitness << endl; 
+  }
+
 
   // Step 2, evaluate the population
   evaluatePopulation(population);
 
-
-  double maxFitness = 0;
-  Candidate optimalSnake;
   unsigned int iteration = 0;
-
   // Step 3 While Termination condition not met do
   while( iteration < 10000) { 
+    std::cout << "Iteration " << iteration << std::endl;
     iteration++;
     // Step 4 Select fitter individuals for reproduction
     selectFitterIndividuals(population);
@@ -33,18 +36,8 @@ int main(int argc, char** argv) {
 
     // Step 7 Evaluate the fitness of the modified individuals
     evaluatePopulation(population);
-
-    double sum = 0;
-
-    for(int i=0; i < POPULATION_SIZE; i++) {
-      sum += population[i].fitness;
-      if (population[i].fitness > maxFitness){
-        maxFitness = population[i].fitness;
-        optimalSnake = population[i];
-      }
-    }
-
-    
+  }
+  
   free(population);
 
   return 0;
