@@ -57,15 +57,13 @@ int main(int argc, char** argv) {
 
     
 
-  /* Now, lets create a series of windows that can hold 32 snakes from each other process */
+  /* Now, lets create a window that can hold 32 snakes from each other process */
 
-  MPI_Win windows[size];
+  MPI_Win win;
   Candidate *travelingSnakes;
   MPI_Alloc_mem(32*sizeof(Candidate)*size, MPI_INFO_NULL, &travelingSnakes); 
   
-  for(int i=0; i < size; i++) {
-    MPI_Win_create(travelingSnakes + i, 32*sizeof(Candidate), sizeof(Candidate), MPI_INFO_NULL, MPI_COMM_WORLD, windows+i);
-  }
+  MPI_Win_create(travelingSnakes, NUM_OF_TRAVELING_SNAKES*sizeof(Candidate)*size, sizeof(Candidate), MPI_INFO_NULL, MPI_COMM_WORLD, &win);
 
   // Step 2, evaluate the population
   evaluatePopulation(population);
@@ -101,11 +99,10 @@ int main(int argc, char** argv) {
   }
 
   free(population); // free our population
+  MPI_Win_free(win); // free the window
+
   free(travelingSnakes); // free our visiting friends
   
-  for(int i=0; i < size; i++)
-    MPI_Win_free(windows + i); // free the window
-
 	MPI_Finalize();
   return 0;
 }
