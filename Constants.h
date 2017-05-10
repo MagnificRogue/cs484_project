@@ -9,6 +9,8 @@ const double CROSSOVER_RATE = .6; // Rate to mate members of the population
 const double EXCHANGE_RATE = .2; // Rate at which each island sends its best snakes
 const int POPULATION_SIZE = 1024; // number of candidates in the population
 const int TERMINATION = 1000; // Number of generations to simulate
+const int NUM_OF_TRAVELING_SNAKES = 32;
+
 // Snake constants
 const double TORQUE_UPPER_BOUND = 20;
 const double TORQUE_LOWER_BOUND = 1;

@@ -2,7 +2,7 @@
 #include "GeneticAlgorithm.h"
 #include <iostream>
 #include <random>
-#include <mpi.h>
+#include "mpi.h"
 
 using namespace std;
 
@@ -10,9 +10,9 @@ int main(int argc, char** argv) {
   int size, rank;
 
   // Initialization for MPI 
-	MPI_Init(&argc,&argv);
-	MPI_Comm_size(MPI_COMM_WORLD, &size);
-	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Init(&argc,&argv);
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   // Using least significant bits of rank
   // to determine varation parameters (island model)
@@ -46,13 +46,14 @@ int main(int argc, char** argv) {
   MPI_Address(population[0].torque,  disp + 1); 
   MPI_Address(population[0].weight , disp + 2); 
   MPI_Address(population[0].length,  disp + 3); 
-  MPI_Address(population[0].fitness, disp + 4); 
+  MPI_Address(&population[0].fitness, disp + 4); 
 
   base = disp[0]; 
-  for (i=0; i < 5; i++) 
+  for (int i=0; i < 5; i++) 
     disp[i] -= base; 
 
   MPI_Type_struct(5, structLength, disp, type, &MPI_CANDIDATE_TYPE); 
+  MPI_Type_commit(&MPI_CANDIDATE_TYPE);
 
     
 
@@ -97,14 +98,13 @@ int main(int argc, char** argv) {
         }
       }
     }
+  }
 
   free(population); // free our population
   free(travelingSnakes); // free our visiting friends
   
   for(int i=0; i < size; i++)
     MPI_Win_free(windows + i); // free the window
-
-  Candidate *travelingSnakes;
 
 	MPI_Finalize();
   return 0;
