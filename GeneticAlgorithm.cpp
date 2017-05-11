@@ -77,12 +77,10 @@ void selectFitterIndividuals(Candidate *&population)
   for(int i=0; i < POPULATION_SIZE; i++) {
 
     double newPopulationTarget = distribution(generator) * totalFitness;
-    cout << " Population Target: " << newPopulationTarget << endl;
     for(int j=0; j < POPULATION_SIZE; j++) {
       newPopulationTarget -= population[j].fitness;
 
       if(newPopulationTarget <=0) {
-        cout << " Found it at " << j << endl;
         newPopulation[i] = population[j];
         break;
       }

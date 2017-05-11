@@ -3,3 +3,4 @@ armadillo_bits
 *.exe
 .svn/
 .svn
+*.txt

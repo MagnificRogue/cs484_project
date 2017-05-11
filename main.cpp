@@ -14,7 +14,6 @@ int main(int argc, char** argv) {
   // Step 2, evaluate the population
   evaluatePopulation(population);
 
-
   double maxFitness = 0;
   Candidate optimalSnake;
   unsigned int iteration = 0;

@@ -6,21 +6,9 @@
 #include "armadillo"
 #include <cmath>
 
-//using namespace std;
 using namespace arma;
 
 double simulate(Candidate candidate) {
-/*
-  std::cout << "Simulating a snake!\n";
-  std::cout << "\t Number of links: " << candidate.numberOfLinks << "\n";
-  
-  for(int i=0; i < candidate.numberOfLinks; i++){
-    std::cout << "\t\tTorque[" << i << "]:" << candidate.torque[i] << "\n"; 
-    std::cout << "\t\tWeight[" << i << "]:" << candidate.weight[i] << "\n"; 
-    std::cout << "\t\tLength[" << i << "]:" << candidate.length[i] << "\n"; 
-  } 
-  std::cout << "\n";
-*/
   int n = candidate.numberOfLinks;
   vec Phase = zeros<vec>(n-1);
 
@@ -153,32 +141,6 @@ double simulate(Candidate candidate) {
     vec dy = inv(AA)*(BB*y+CC*U+DD*(squareY));
 
     y += dy*dt;
-  /* 
-    if(step%PrintStep == 0){
-       vec xout = zeros<vec>(n+1);
-       vec yout = zeros<vec>(n+1);
-       for (int i=1; i<n+1; i++){    
-          xout(i) = xout(i-1) + L(i-1,i-1)*cos(y(i-1));
-          yout(i) = yout(i-1) + L(i-1,i-1)*sin(y(i-1));
-       }
-
-       vec xcenter = zeros<vec>(n);
-       vec ycenter = zeros<vec>(n);      
-       for (int i=0; i<n; i++){
-          xcenter(i) = 0.5*(xout(i)+xout(i+1));
-          ycenter(i) = 0.5*(yout(i)+yout(i+1));
-       }
-       
-       mat XCENTER = (1.0/m)*e.t()*M*xcenter;
-       mat YCENTER = (1.0/m)*e.t()*M*ycenter;
-
-       for (int i=0; i<n+1; i++){
-          xout(i) += y(n)-XCENTER(0,0);
-          yout(i) += y(n+1) - YCENTER(0,0);
-       }
-
-    }*/
-
     time += dt;
     step ++;
   }
@@ -187,25 +149,10 @@ double simulate(Candidate candidate) {
   double outX = y(n);
   double outY = y(n+1);
  
-  /*
-  outX = outX < 0 ? outX * - 1 : outX; 
-  outY = outY < 0 ? outY * - 1 : outY; 
-
-  double answer = outX - outY;
-<<<<<<< Updated upstream
-
-  if(isnan(answer) || answer < 0)
-    answer = 0;
-=======
-
-  if(isnan(answer) || answer < 0)
-    answer = 0;
-  */
   double answer = sqrt(pow(outX,2) + pow(outY,2));
   
   if(isnan(answer))
-    std::cout << " I found a nan!\n";
- //   answer = 0;
+    answer = 0;
 
   return answer;
 
